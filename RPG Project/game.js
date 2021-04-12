@@ -4,7 +4,7 @@ var config = {
     height: 1080,
     backgroundColor: 0x000000,
     // scenes are put into array for config
-    scene: [StartScene, Scene2]
+    scene: [StartScene, DialogueScene,CharacterSelection,ActionScene]
 }
 
 // create an instance of the game
