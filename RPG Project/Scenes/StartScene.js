@@ -34,12 +34,18 @@ class StartScene extends Phaser.Scene {
         // this.add.image(0,0,"background");
         // position: the x and y coordinates
         // key: the key of the image in preload
-        this.backgroundtest = this.add.image(0,0, "backgroundtest");
+        //this.backgroundtest = this.add.image(0,0, "backgroundtest");
         // changes pivot of image to top left instead of center
-        this.backgroundtest.setOrigin(0,0);
-        this.backgroundtest.setScale(2);
-        
-        
+        //this.backgroundtest.setOrigin(0,0);
+        //this.backgroundtest.setScale(2);
+
+        /*let backgroundtest = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "backgroundtest")
+        let scaleX = this.cameras.main.width / backgroundtest.width
+        let scaleY = this.cameras.main.height / backgroundtest.height
+        let scale = Math.max(scaleX, scaleY)
+        backgroundtest.setScale(scale).setScrollFactor(0)*/
+
+        this.add.image(960,540,"backgroundtest").setScale(8)
         this.add.text(20, 20, "start scene", {font: "25px Arial", fill: "yellow"});
     
 
