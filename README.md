@@ -1,2 +1,6 @@
-if you uploaded a renamed file, can you try to delete the previous file in git
-(There might be werid duplicate extra files if not, like changing a file name for ex.)
+RPG Menu Project
+goal: use phaser and implement a rpg narrative game, with a turn based battle mechanic (RPG action menu)
+
+
+(if you uploaded a renamed file, can you try to delete the previous file in git)
+
