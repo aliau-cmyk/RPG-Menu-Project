@@ -6,7 +6,8 @@ class CharacterTemplate{
         this.name = name;
         this.maxHealth;
         this.currentHealth;
-        this.moveset = [];
+        //dictionary: key value pairs
+        this.moveset = {};
     }
 
 }

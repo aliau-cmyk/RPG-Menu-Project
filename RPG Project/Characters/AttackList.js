@@ -1,4 +1,4 @@
-import {AttackTemplate} from "./AttackTemplate";
+import {AttackTemplate} from "./AttackTemplate.js";
 
 // BASIC ATTACK
 var basicAttack = new AttackTemplate;
