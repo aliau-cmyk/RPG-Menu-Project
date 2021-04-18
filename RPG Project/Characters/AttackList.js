@@ -13,7 +13,7 @@ basicAttack.effectValue = 0;
 
 // THROW DUST ATTACK
 var throwDust = new AttackTemplate;
-throwDust.attackName = "Basic Attack";
+throwDust.attackName = "Throw Dust";
 throwDust.description = "Throw dust into enemy's eyes. Lowers their accuracy by 25%!"
 throwDust.power = 0;
 throwDust.accuracy = 1;
