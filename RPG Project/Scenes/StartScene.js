@@ -15,7 +15,8 @@ class StartScene extends Phaser.Scene {
         // url: a string path to the image file
         this.load.image("backgroundtest", "assets/images/backgroundtest.png");
         this.load.image("startButton", "assets/images/startButton.png");
-
+        this.load.image("startButtonHover", "assets/images/startButtonHover.png");
+        this.load.image("title","assets/images/title.png")
     }
 
     // changeScene function
@@ -29,35 +30,21 @@ class StartScene extends Phaser.Scene {
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
 
-        
-        // sets class variable for image
-        // this.add.image(0,0,"background");
-        // position: the x and y coordinates
-        // key: the key of the image in preload
-        //this.backgroundtest = this.add.image(0,0, "backgroundtest");
-        // changes pivot of image to top left instead of center
-        //this.backgroundtest.setOrigin(0,0);
-        //this.backgroundtest.setScale(2);
-
-        /*let backgroundtest = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, "backgroundtest")
-        let scaleX = this.cameras.main.width / backgroundtest.width
-        let scaleY = this.cameras.main.height / backgroundtest.height
-        let scale = Math.max(scaleX, scaleY)
-        backgroundtest.setScale(scale).setScrollFactor(0)*/
-
-        this.add.image(960,540,"backgroundtest").setScale(8)
+        this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest")
+        this.add.image(WIDTH/2,HEIGHT/5*2,"title")
         this.add.text(20, 20, "start scene", {font: "25px Arial", fill: "yellow"});
     
 
         // make button, setInteractive
-        var startButton = this.add.image(WIDTH/2, HEIGHT/2, "startButton").setInteractive();
+        this.startButton = this.add.image(WIDTH/2, HEIGHT/5*3, "startButton").setInteractive().setScale(0.5);
         // clicking startButton will change scene
         this.input.on('gameobjectdown', this.changeScene, this);
 
         
         // button hover, colors
-        startButton.on('pointerover', function (pointer) {
-            this.setTint(0xff0000);
+        /*startButton.on('pointerover', function (pointer) {
+            //this.setTint(0xff0000);
+            startButton.setFrame(1);
             this.scene.start("playGame");
         });
     
@@ -67,10 +54,23 @@ class StartScene extends Phaser.Scene {
     
         startButton.on('pointerup', function (pointer) {
             this.clearTint();
-        });
+        });*/
+    
+        //Button hover
+        this.startButton.on('pointerdown', function (pointer) {
+            this.scene.start("playGame")
+        }.bind(this));
         
+        this.input.on('pointerover',function(event,gameObjects){
+            gameObjects[0].setTexture('startButtonHover')
+        })
+        this.input.on('pointerout',function(event,gameObjects){
+            gameObjects[0].setTexture('startButton')
+        })
+        this.input.on('pointerup', function (event,gameObjects) {
+            gameObjects[0].setTexture('startButtonHover')
+        })
     }
 
-    update() {
-    }
+    update(){}
 }

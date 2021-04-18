@@ -1,10 +1,3 @@
-const COLOR_PRIMARY = 0x4e342e;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
-
-var content = `Phaser is a fast, free, and fun open source HTML5 game framework that offers WebGL and Canvas rendering across desktop and mobile web browsers. Games can be compiled to iOS, Android and native apps by using 3rd party tools. You can use JavaScript or TypeScript for development.`;
-
-
 class DialogueScene extends Phaser.Scene {
     constructor() {
         super("playGame");
@@ -19,11 +12,11 @@ class DialogueScene extends Phaser.Scene {
         });
         this.load.image('warrior', 'assets/images/warrior.png')
         this.load.image('arrowSilver', 'assets/images/arrowSilver_right.png')
-        //this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
-        //this.load.plugin('DialogModalPlugin','Scenes/dialog_plugin.js')
     }
 
     create(){
+        const WIDTH = this.sys.game.config.width;
+        const HEIGHT = this.sys.game.config.height;
         // sets class variable for image
         // this.add.image(0,0,"background");
         // position: the x and y coordinates
@@ -38,8 +31,8 @@ class DialogueScene extends Phaser.Scene {
         let scaleY = this.cameras.main.height / backgroundtest.height
         let scale = Math.max(scaleX, scaleY)
         backgroundtest.setScale(scale).setScrollFactor(0)*/
-        this.add.image(960,540,"backgroundtest").setScale(8)
-        this.add.image(960,450,"warrior").setScale(3)
+        this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest");
+        this.add.image(WIDTH/2,HEIGHT/5*2,"warrior").setScale(3);
         this.add.text(20, 20, "Playing game", {font: "25px Arial", fill: "yellow"});
 
         this.nextButton = this.add.image(1800,1000,"arrowSilver").setScale(2).setInteractive()
@@ -49,18 +42,22 @@ class DialogueScene extends Phaser.Scene {
         }.bind(this));
 
         createTextBox(this, 400, 700, {
-            wrapWidth: 900,
+            wrapWidth: 1000,
             fixedWidth: 1000,
             fixedHeight: 200,
         })
-        .start(content, 50);
-      
-        
+        .start(content1, 50);
     }
 
     update() {}
 }
 
+
+const COLOR_PRIMARY = 0x4e342e;
+const COLOR_LIGHT = 0x7b5e57;
+const COLOR_DARK = 0x260e04;
+
+var content1 = `Phaser is a fast, free, and fun open source HTML5 game framework that offers WebGL and Canvas rendering across desktop and mobile web browsers. Games can be compiled to iOS, Android and native apps by using 3rd party tools. You can use JavaScript or TypeScript for development.`;
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 var createTextBox = function (scene, x, y, config) {
@@ -77,7 +74,7 @@ var createTextBox = function (scene, x, y, config) {
             space: {
                 left: 80,
                 right: 20,
-                top: 20,
+                top: 40,
                 bottom: 20,
                 icon: 10,
                 text: 10,
@@ -122,7 +119,6 @@ var createTextBox = function (scene, x, y, config) {
 }
 
 
-
 var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
     return scene.rexUI.add.BBCodeText(0, 0, '', {
         fixedWidth: fixedWidth,
@@ -132,7 +128,7 @@ var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
             //mode: 'word',
             width: wrapWidth
         },
-        maxLines: 4
+        maxLines: 5,
     })
 }
 
