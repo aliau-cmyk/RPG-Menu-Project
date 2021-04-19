@@ -12,9 +12,15 @@ class DialogueScene extends Phaser.Scene {
         });
         this.load.image('warrior', 'assets/images/warrior.png')
         this.load.image('arrowSilver', 'assets/images/arrowSilver_right.png')
+
+        //source: https://soundimage.org/looping-music/
+        this.load.audio('bgmusic', 'assets/music/Quirky-Puzzle-Game-Menu.mp3');
     }
 
     create(){
+        this.bgmusic = this.sound.add('bgmusic', 1, true);
+        this.bgmusic.play();
+
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
         // sets class variable for image
@@ -57,7 +63,28 @@ const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 
-var content1 = `Phaser is a fast, free, and fun open source HTML5 game framework that offers WebGL and Canvas rendering across desktop and mobile web browsers. Games can be compiled to iOS, Android and native apps by using 3rd party tools. You can use JavaScript or TypeScript for development.`;
+// two line breaks indicates next slide
+var content1 = 
+`Hi! You look new.
+
+
+I'm Shark by the way.
+
+
+Shark from the Dynablaze guild!
+
+
+What you never heard of the Dynablaze guild?
+
+
+Well, we are a group of rag-tag adventurers who-
+
+
+Oh no, I think a monster is approaching us.
+
+
+Let's try to fight it off.
+`
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 var createTextBox = function (scene, x, y, config) {
@@ -128,7 +155,7 @@ var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
             //mode: 'word',
             width: wrapWidth
         },
-        maxLines: 5,
+        maxLines: 3,
     })
 }
 

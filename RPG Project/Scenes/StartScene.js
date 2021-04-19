@@ -17,21 +17,29 @@ class StartScene extends Phaser.Scene {
         this.load.image("startButton", "assets/images/startButton.png");
         this.load.image("startButtonHover", "assets/images/startButtonHover.png");
         this.load.image("title","assets/images/title.png")
+
+        // source: https://soundimage.org/looping-music/
+        this.load.audio('menumusic', 'assets/music/Game-Menu_Looping.mp3');
     }
 
     // changeScene function
     changeScene() {
         //changes the scene
+        this.sound.stopAll();
         this.scene.start("playGame");
     }
 
     // note all scenes are controlled by init() preload() create() and update()
     create() {
+
+        this.menumusic = this.sound.add('menumusic', 1, true);
+        this.menumusic.play();
+
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
 
-        this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest")
-        this.add.image(WIDTH/2,HEIGHT/5*2,"title")
+        this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest");
+        this.add.image(WIDTH/2,HEIGHT/5*2,"title");
         this.add.text(20, 20, "start scene", {font: "25px Arial", fill: "yellow"});
     
 
