@@ -24,10 +24,17 @@ class UIScene extends Phaser.Scene {
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
         
+        //ATTACK BUTTON
         this.attackButton = this.add.sprite(WIDTH/2,HEIGHT/3,'yellowButton').setInteractive().setScale(1.5)
         this.attackText = this.add.text(0,0, "Attack",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.attackText, this.attackButton)
 
+        this.attackButton.on('pointerdown', function(pointer) {
+            //NOT WORKING
+            makeFirstOptionsInvisible();
+        }.bind(this));
+
+        //ITEM BUTTON
         this.itemButton = this.add.sprite(WIDTH/2,HEIGHT/2,'yellowButton').setInteractive().setScale(1.5)
         this.itemText = this.add.text(0,0, "Items",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.itemText, this.itemButton)
@@ -38,6 +45,7 @@ class UIScene extends Phaser.Scene {
             Alert(scene,'Oops! No item available!')
         }.bind(this));
 
+        //FLEE BUTTON
         this.leaveButton = this.add.sprite(WIDTH/2,HEIGHT/3*2,'yellowButton').setInteractive().setScale(1.5)
         this.leaveText = this.add.text(0,0, "Flee",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.leaveText, this.leaveButton)
@@ -51,6 +59,12 @@ class UIScene extends Phaser.Scene {
         this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1')});
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
 
+        // function to make first menu options invisible
+        function makeFirstOptionsInvisible () {
+            this.attackButton.setVisible(false);
+            this.leaveButton.setVisible(false);
+            this.leaveButton.setVisible(false);
+        }
      
     }
     update(){}
