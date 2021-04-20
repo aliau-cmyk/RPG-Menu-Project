@@ -42,6 +42,11 @@ class UIScene extends Phaser.Scene {
         this.leaveText = this.add.text(0,0, "Flee",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.leaveText, this.leaveButton)
 
+        this.leaveButton.on('pointerdown', function (pointer) {
+                var scene = this;
+                Alert(scene, 'Cannot escape!')
+        }.bind(this));
+        
         //Button Event
         this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1')});
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});

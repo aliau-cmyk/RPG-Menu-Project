@@ -31,9 +31,17 @@ class StartScene extends Phaser.Scene {
 
     // note all scenes are controlled by init() preload() create() and update()
     create() {
-
-        this.menumusic = this.sound.add('menumusic', 1, true);
-        this.menumusic.play();
+        this.menumusic = this.sound.add('menumusic');
+        var musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.menumusic.play(musicConfig);
 
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;

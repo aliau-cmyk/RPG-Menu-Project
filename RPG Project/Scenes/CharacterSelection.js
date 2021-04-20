@@ -34,6 +34,7 @@ class CharacterSelection extends Phaser.Scene {
         this.Text1 = this.add.text(0,0, "Archer",{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text1, this.Button1)
         this.Button1.on('pointerdown', function (pointer) {
+            this.sound.stopAll();
             this.scene.start("action",{id:0, image:'character_femaleAdventurer_idle.png'})
         }.bind(this));
         
@@ -47,6 +48,7 @@ class CharacterSelection extends Phaser.Scene {
         this.Text2 = this.add.text(0,0, "Warrior",{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text2, this.Button2)
         this.Button2.on('pointerdown', function (pointer) {
+            this.sound.stopAll();
             this.scene.start("action",{id:1, image:'warrior.png'})
         }.bind(this));
 
@@ -56,6 +58,7 @@ class CharacterSelection extends Phaser.Scene {
         this.Text3 = this.add.text(0,0,"Adventurer",{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text3, this.Button3)
         this.Button3.on('pointerdown', function (pointer) {
+            this.sound.stopAll();
             this.scene.start("action",{id:2, image:'adventurer_idle.png'})
         }.bind(this));
 

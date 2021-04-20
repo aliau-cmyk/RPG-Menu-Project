@@ -18,8 +18,17 @@ class DialogueScene extends Phaser.Scene {
     }
 
     create(){
-        this.bgmusic = this.sound.add('bgmusic', 1, true);
-        this.bgmusic.play();
+        this.bgmusic = this.sound.add('bgmusic');
+        var musicConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        this.bgmusic.play(musicConfig);
 
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
