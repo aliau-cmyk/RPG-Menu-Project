@@ -1,3 +1,10 @@
+//import {playerData, shark, getMoveByName} from '../playerData.js';
+
+
+// TESTING AREA
+//console.log(getMoveByName(playerData.currentCharacter.moveset, "Basic Attack"));
+//console.log(getMoveByName(playerData.currentCharacter.moveset, "Basic Attack").description);
+//
 class UIScene extends Phaser.Scene {
     constructor() {
         super("UIScene");
