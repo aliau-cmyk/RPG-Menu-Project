@@ -30,9 +30,27 @@ class UIScene extends Phaser.Scene {
         centerButtonText(this.attackText, this.attackButton)
 
         this.attackButton.on('pointerdown', function(pointer) {
-            //NOT WORKING
-            makeFirstOptionsInvisible();
+            //WORKING NOW
+            this.firstOptionsInvisible();
+            this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/5,'yellowButton').setInteractive().setScale(1.5)
+            this.attackText1 = this.add.text(0,0, "Attack1",{font: "35px Arial", fill: "brown"})
+            centerButtonText(this.attackText1, this.attack1)
+            this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/5*2,'yellowButton').setInteractive().setScale(1.5)
+            this.attackText2 = this.add.text(0,0, "Attack2",{font: "35px Arial", fill: "brown"})
+            centerButtonText(this.attackText2, this.attack2)
+            this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/5*3,'yellowButton').setInteractive().setScale(1.5)
+            this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"})
+            centerButtonText(this.attackText3, this.attack3)
+            this.backButton = this.add.sprite(WIDTH/2,HEIGHT/5*4,'yellowButton').setInteractive().setScale(1.5)
+            this.backText = this.add.text(0,0, "Back",{font: "35px Arial", fill: "brown"})
+            centerButtonText(this.backText, this.backButton)
+
+            this.backButton.on('pointerdown',function(pointer){
+                this.secondMenuInvisible();
+                this.firstMenuVisible();
+            }.bind (this));
         }.bind(this));
+
 
         //ITEM BUTTON
         this.itemButton = this.add.sprite(WIDTH/2,HEIGHT/2,'yellowButton').setInteractive().setScale(1.5)
@@ -51,8 +69,8 @@ class UIScene extends Phaser.Scene {
         centerButtonText(this.leaveText, this.leaveButton)
 
         this.leaveButton.on('pointerdown', function (pointer) {
-                var scene = this;
-                Alert(scene, 'Cannot escape!')
+            var scene = this;
+            Alert(scene, 'Cannot escape!')
         }.bind(this));
         
         //Button Event
@@ -60,14 +78,45 @@ class UIScene extends Phaser.Scene {
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
 
         // function to make first menu options invisible
-        function makeFirstOptionsInvisible () {
-            this.attackButton.setVisible(false);
-            this.leaveButton.setVisible(false);
-            this.leaveButton.setVisible(false);
-        }
+        //function makeFirstOptionsInvisible () {
+            //this.attackButton.setVisible(false);
+            //this.leaveButton.setVisible(false);
+            //this.leaveButton.setVisible(false);
+        //}
+
      
     }
     update(){}
+
+    firstOptionsInvisible(){
+        this.attackButton.setVisible(false);
+        this.attackText.setVisible(false);
+        this.itemButton.setVisible(false);
+        this.itemText.setVisible(false);
+        this.leaveButton.setVisible(false);
+        this.leaveText.setVisible(false);
+    }
+
+    secondMenuInvisible(){
+        this.attack1.setVisible(false);
+        this.attack2.setVisible(false);
+        this.attack3.setVisible(false);
+        this.attackText1.setVisible(false);
+        this.attackText2.setVisible(false);
+        this.attackText3.setVisible(false);
+        this.backButton.setVisible(false);
+        this.backText.setVisible(false);
+    }
+
+    firstMenuVisible(){
+        this.attackButton.setVisible(true);
+        this.attackText.setVisible(true);
+        this.itemButton.setVisible(true);
+        this.itemText.setVisible(true);
+        this.leaveButton.setVisible(true);
+        this.leaveText.setVisible(true);
+ 
+    }
 }
 
 //const COLOR_PRIMARY = 0x4e342e;
@@ -166,13 +215,3 @@ var Alert = function (scene, content, x, y) {
             return Promise.resolve();
         })
 }
-
-var config = {
-    type: Phaser.AUTO,
-    parent: 'phaser-example',
-    width: 800,
-    height: 600,
-    scene: Demo
-};
-
-var game = new Phaser.Game(config);
