@@ -5,6 +5,15 @@
 //console.log(getMoveByName(playerData.currentCharacter.moveset, "Basic Attack"));
 //console.log(getMoveByName(playerData.currentCharacter.moveset, "Basic Attack").description);
 //
+
+var content3 = "add the dialogue here! Make your movement now"
+var content4 = "add descriptions here(attack 1)"
+var content5 = "add descriptions here(attack 2)"
+var content6 = "add descriptions here(attack 3)"
+var content_attack1 = "skill dialogue1"
+var content_attack2 = "skill dialogue2"
+var content_attack3 = "skill dialogue3"
+
 class UIScene extends Phaser.Scene {
     constructor() {
         super("UIScene");
@@ -36,35 +45,112 @@ class UIScene extends Phaser.Scene {
         this.attackText = this.add.text(0,0, "Attack",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.attackText, this.attackButton)
 
-        
-        // Grab global variables
-        let getMoveByName = this.registry.get("getMoveByName");
-        let mymoveset = this.registry.get("shark").moveset;
-        let attackOneName = getMoveByName(mymoveset, "Basic Attack").attackName;
-        let attackTwoName = getMoveByName(mymoveset, "Throw Dust").attackName;
-        
-
         this.attackButton.on('pointerdown', function(pointer) {
             //WORKING NOW
             this.firstOptionsInvisible();
-            this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/5,'yellowButton').setInteractive().setScale(1.5)
-            this.attackText1 = this.add.text(0,0, attackOneName,{font: "35px Arial", fill: "brown"})
-            centerButtonText(this.attackText1, this.attack1)
-            this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/5*2,'yellowButton').setInteractive().setScale(1.5)
-            this.attackText2 = this.add.text(0,0, attackTwoName,{font: "35px Arial", fill: "brown"})
-            centerButtonText(this.attackText2, this.attack2)
-            this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/5*3,'yellowButton').setInteractive().setScale(1.5)
-            this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"})
-            centerButtonText(this.attackText3, this.attack3)
-            this.backButton = this.add.sprite(WIDTH/2,HEIGHT/5*4,'yellowButton').setInteractive().setScale(1.5)
-            this.backText = this.add.text(0,0, "Back",{font: "35px Arial", fill: "brown"})
-            centerButtonText(this.backText, this.backButton)
+            this.box1.setVisible(false);
+            this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/6,'yellowButton').setInteractive().setScale(1.5);
+            this.attackText1 = this.add.text(0,0, "Attack1",{font: "35px Arial", fill: "brown"});
+            centerButtonText(this.attackText1, this.attack1);
+
+            this.attack1.on('pointerover', function(pointer) {this.box2.setVisible(true)}.bind(this));
+            this.attack1.on('pointerout',function(pointer){this.box2.setVisible(false)}.bind(this));
+            this.attack1.on('pointerdown',function(pointer){
+                this.box_attack1.setVisible(true);
+                this.box_attack2.setVisible(false);
+                this.box_attack3.setVisible(false);
+            }.bind(this));
+
+
+            this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/6*2,'yellowButton').setInteractive().setScale(1.5);
+            this.attackText2 = this.add.text(0,0, "Attack2",{font: "35px Arial", fill: "brown"});
+            centerButtonText(this.attackText2, this.attack2);
+
+            this.attack2.on('pointerover', function(pointer) {this.box3.setVisible(true)}.bind(this));
+            this.attack2.on('pointerout',function(pointer){this.box3.setVisible(false)}.bind(this));
+            this.attack2.on('pointerdown',function(pointer){
+                this.box_attack1.setVisible(false);
+                this.box_attack2.setVisible(true);
+                this.box_attack3.setVisible(false);
+            }.bind(this));
+
+            this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/6*3,'yellowButton').setInteractive().setScale(1.5);
+            this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"});
+            centerButtonText(this.attackText3, this.attack3);
+
+            this.attack3.on('pointerover', function(pointer) {this.box4.setVisible(true)}.bind(this));
+            this.attack3.on('pointerout',function(pointer){this.box4.setVisible(false)}.bind(this));
+            this.attack3.on('pointerdown',function(pointer){
+                this.box_attack1.setVisible(false);
+                this.box_attack2.setVisible(false);
+                this.box_attack3.setVisible(true);
+            }.bind(this))
+
+            this.backButton = this.add.sprite(WIDTH/2,HEIGHT/6*4,'yellowButton').setInteractive().setScale(1.5);
+            this.backText = this.add.text(0,0, "Back",{font: "35px Arial", fill: "brown"});
+            centerButtonText(this.backText, this.backButton);
 
             this.backButton.on('pointerdown',function(pointer){
                 this.secondMenuInvisible();
                 this.firstMenuVisible();
+                this.box1.setVisible(true);
+                this.box_attack1.setVisible(false);
+                this.box_attack2.setVisible(false);
+                this.box_attack3.setVisible(false);
             }.bind (this));
         }.bind(this));
+
+        //create textBox
+        this.box1 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+            wrapWidth: WIDTH/2,
+            fixedWidth: WIDTH/2,
+            fixedHeight: 150,
+        })
+        .start(content3, 50);
+        
+        this.box2 = createTextBox(this, WIDTH/3,HEIGHT/5, {
+            wrapWidth: WIDTH/3,
+            fixedWidth: WIDTH/3.5,
+            fixedHeight: 50,
+        })
+        .start(content4, 50).setVisible(false)
+
+        this.box3 = createTextBox(this, WIDTH/3,HEIGHT/5*1.82, {
+            wrapWidth: WIDTH/3,
+            fixedWidth: WIDTH/3.5,
+            fixedHeight: 50,
+        })
+        .start(content5, 50).setVisible(false)
+
+        this.box4 = createTextBox(this, WIDTH/3,HEIGHT/5*2.65, {
+            wrapWidth: WIDTH/3,
+            fixedWidth: WIDTH/3.5,
+            fixedHeight: 50,
+        })
+        .start(content6, 20).setVisible(false)
+
+        this.box_attack1 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+            wrapWidth: WIDTH/2,
+            fixedWidth: WIDTH/2,
+            fixedHeight: 150,
+        })
+        .start(content_attack1, 50).setVisible(false)
+
+        
+        this.box_attack2 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+            wrapWidth: WIDTH/2,
+            fixedWidth: WIDTH/2,
+            fixedHeight: 150,
+        })
+        .start(content_attack2, 50).setVisible(false)
+
+        
+        this.box_attack3 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+            wrapWidth: WIDTH/2,
+            fixedWidth: WIDTH/2,
+            fixedHeight: 150,
+        })
+        .start(content_attack3, 50).setVisible(false)
 
 
         //ITEM BUTTON
@@ -89,34 +175,27 @@ class UIScene extends Phaser.Scene {
         }.bind(this));
         
         //Button Event
-        this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1')});
+        this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1');});
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
 
-   
+        // function to make first menu options invisible
+        //function makeFirstOptionsInvisible () {
+            //this.attackButton.setVisible(false);
+            //this.leaveButton.setVisible(false);
+            //this.leaveButton.setVisible(false);
+        //}
+
         //test if import works
         // SHOULD SAY: 'WILL PERFORM BASIC ATTACK.' in action state
-        //let test = this.registry.get("shark").moveset[0].description;
-
-        /*
-        let chara = this.registry.get("shark");
-        let moo = chara.currentHealth - 20;
-        chara.currentHealth = moo;
-        this.registry.set("shark", chara);
-        let newchara = this.registry.get("shark");
-        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
-        */
-       
-        //FUNCTIONALITY TESTING
-        let chara = this.registry.get("shark");
-        let moo = chara.currentHealth - 20;
-        chara.currentHealth = moo;
-        this.registry.set("shark", chara);
-        // change access values through values key
-        this.registry.values.shark.currentHealth += 5;
-        let newchara = this.registry.values.shark;
-        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        let test = this.registry.get("shark").moveset[0].description;
+        this.add.text(20, 80, test, {font: "25px Arial", fill: "yellow"}).setDepth(20);
     }
     update(){}
+
+    returnObject(o)
+	{
+		return o;
+	}
 
     firstOptionsInvisible(){
         this.attackButton.setVisible(false);
