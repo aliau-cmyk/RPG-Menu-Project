@@ -27,6 +27,17 @@ class CharacterDataLoader extends Phaser.Scene {
             effectValue : .75
         };
 
+        this.weakAttack = {
+            attackName : "Weak Attack",
+            description : "Will perform a weak attack.",
+            power : 10,
+            accuracy : 1,
+            stamina : 30,
+            currentStamina : 30,
+            effect : "none",
+            effectValue : 0
+        };
+
         this.shark = {
             name : "Shark",
             maxHealth: 100,

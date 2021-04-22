@@ -36,14 +36,22 @@ class UIScene extends Phaser.Scene {
         this.attackText = this.add.text(0,0, "Attack",{font: "35px Arial", fill: "brown"})
         centerButtonText(this.attackText, this.attackButton)
 
+        
+        // Grab global variables
+        let getMoveByName = this.registry.get("getMoveByName");
+        let mymoveset = this.registry.get("shark").moveset;
+        let attackOneName = getMoveByName(mymoveset, "Basic Attack").attackName;
+        let attackTwoName = getMoveByName(mymoveset, "Throw Dust").attackName;
+        
+
         this.attackButton.on('pointerdown', function(pointer) {
             //WORKING NOW
             this.firstOptionsInvisible();
             this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/5,'yellowButton').setInteractive().setScale(1.5)
-            this.attackText1 = this.add.text(0,0, "Attack1",{font: "35px Arial", fill: "brown"})
+            this.attackText1 = this.add.text(0,0, attackOneName,{font: "35px Arial", fill: "brown"})
             centerButtonText(this.attackText1, this.attack1)
             this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/5*2,'yellowButton').setInteractive().setScale(1.5)
-            this.attackText2 = this.add.text(0,0, "Attack2",{font: "35px Arial", fill: "brown"})
+            this.attackText2 = this.add.text(0,0, attackTwoName,{font: "35px Arial", fill: "brown"})
             centerButtonText(this.attackText2, this.attack2)
             this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/5*3,'yellowButton').setInteractive().setScale(1.5)
             this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"})
@@ -84,24 +92,31 @@ class UIScene extends Phaser.Scene {
         this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1')});
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
 
-        // function to make first menu options invisible
-        //function makeFirstOptionsInvisible () {
-            //this.attackButton.setVisible(false);
-            //this.leaveButton.setVisible(false);
-            //this.leaveButton.setVisible(false);
-        //}
-
+   
         //test if import works
         // SHOULD SAY: 'WILL PERFORM BASIC ATTACK.' in action state
-        let test = this.registry.get("shark").moveset[0].description;
-        this.add.text(20, 80, test, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        //let test = this.registry.get("shark").moveset[0].description;
+
+        /*
+        let chara = this.registry.get("shark");
+        let moo = chara.currentHealth - 20;
+        chara.currentHealth = moo;
+        this.registry.set("shark", chara);
+        let newchara = this.registry.get("shark");
+        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        */
+       
+        //FUNCTIONALITY TESTING
+        let chara = this.registry.get("shark");
+        let moo = chara.currentHealth - 20;
+        chara.currentHealth = moo;
+        this.registry.set("shark", chara);
+        // change access values through values key
+        this.registry.values.shark.currentHealth += 5;
+        let newchara = this.registry.values.shark;
+        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
     }
     update(){}
-
-    returnObject(o)
-	{
-		return o;
-	}
 
     firstOptionsInvisible(){
         this.attackButton.setVisible(false);

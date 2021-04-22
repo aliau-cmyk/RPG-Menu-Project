@@ -9,13 +9,13 @@ class HealthBar extends Phaser.Scene {
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
 
-        //make 3 bars
-        let healthBar=this.makeBar(WIDTH/100*10,HEIGHT/100*10,0x2ecc71);
-        this.setValue(healthBar,100);
+        //make 2 bars
+        let myHealthBar=this.makeBar(WIDTH/100*10,HEIGHT/100*10,0x2ecc71);
+        this.setValue(myHealthBar,100);
 
 
-        let enemyBar=this.makeBar(WIDTH/2 + WIDTH/100*20, HEIGHT/100*10,0x2ecc71);
-        this.setValue(enemyBar,100);
+        let enemyHealthBar=this.makeBar(WIDTH/2 + WIDTH/100*20, HEIGHT/100*10,0x2ecc71);
+        this.setValue(enemyHealthBar,100);
     }
 
     //this.add.image(WIDTH/5,HEIGHT/5*2,'pic'+ this.imageID).setScale(2.5);
@@ -40,7 +40,9 @@ class HealthBar extends Phaser.Scene {
     }
     setValue(bar,percentage) {
         //scale the bar
+        //percentage in decimal
         bar.scaleX = percentage/100;
     }
-    update() {}
+    update() {
+    }
 }
