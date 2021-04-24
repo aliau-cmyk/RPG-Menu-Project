@@ -73,24 +73,30 @@ const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 
-// two line breaks indicates next slide
+// three line breaks indicates next slide
 var content1 = 
 `Hi! You look new.
+
 
 
 I'm Shark by the way.
 
 
+
 Shark from the Dynablaze guild!
+
 
 
 What you never heard of the Dynablaze guild?
 
 
+
 Well, we are a group of rag-tag adventurers who-
 
 
+
 Oh no, I think a monster is approaching us.
+
 
 
 Let's try to fight it off.
@@ -123,8 +129,8 @@ var createTextBox = function (scene, x, y, config) {
     textBox  //set interactive to the text box
         .setInteractive()
         .on('pointerdown', function () {
-            var icon = this.getElement('action').setVisible(false);
-            this.resetChildVisibleState(icon);
+            //var icon = this.getElement('action').setVisible(false);
+            //this.resetChildVisibleState(icon);
             if (this.isTyping) {
                 this.stop(true); // stop and show the all words
             } else {
@@ -165,7 +171,7 @@ var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
             //mode: 'word',
             width: wrapWidth
         },
-        maxLines: 3,
+        maxLines: 4,
     })
 }
 
