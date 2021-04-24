@@ -8,7 +8,7 @@ class CharacterDataLoader extends Phaser.Scene {
         this.basicAttack = {
             attackName : "Basic Attack",
             description : "Will perform a basic attack.",
-            power : 30,
+            power : 20,
             accuracy : 1,
             stamina : 20,
             currentStamina : 20,
@@ -38,6 +38,13 @@ class CharacterDataLoader extends Phaser.Scene {
             effectValue : 0
         };
 
+        this.basicEnemy = {
+            name: "Shlies",
+            maxHealth: 100,
+            currentHealth: 100,
+            moveset: [this.weakAttack]
+        }
+
         this.shark = {
             name : "Shark",
             maxHealth: 100,
@@ -62,6 +69,8 @@ class CharacterDataLoader extends Phaser.Scene {
         // https://photonstorm.github.io/phaser3-docs/Phaser.Data.DataManager.html
         this.registry.set("basicAttack", this.basicAttack);
         this.registry.set("throwDust", this.throwDust);
+        this.registry.set("weakAttack", this.weakAttack);
+        this.registry.set("basicEnemy", this.basicEnemy);
         this.registry.set("shark", this.shark);
         this.registry.set("getMoveByName", this.getMoveByName);
         

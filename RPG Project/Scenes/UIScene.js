@@ -6,13 +6,13 @@
 //console.log(getMoveByName(playerData.currentCharacter.moveset, "Basic Attack").description);
 //
 
-var content3 = "add the dialogue here! Make your movement now"
-var content4 = "add descriptions here(attack 1)"
-var content5 = "add descriptions here(attack 2)"
-var content6 = "add descriptions here(attack 3)"
-var content_attack1 = "skill dialogue1"
-var content_attack2 = "skill dialogue2"
-var content_attack3 = "skill dialogue3"
+
+var battleSelectionDialogue = "Choose an an action!";
+var attackDescription1 = "add descriptions here(attack 1)";
+var attackDescription2 = "add descriptions here(attack 2)";
+var attackDescription3 = "add descriptions here(attack 3)";
+var placeholderDialogue = "some battle dialogue1";
+
 
 class UIScene extends Phaser.Scene {
     constructor() {
@@ -43,47 +43,57 @@ class UIScene extends Phaser.Scene {
         //ATTACK BUTTON
         this.attackButton = this.add.sprite(WIDTH/2,HEIGHT/3,'yellowButton').setInteractive().setScale(1.5)
         this.attackText = this.add.text(0,0, "Attack",{font: "35px Arial", fill: "brown"})
-        centerButtonText(this.attackText, this.attackButton)
+        centerButtonText(this.attackText, this.attackButton);
+
+        // Grab global variables
+        let attackOneName = this.registry.values.currentCharacter.moveset[0].attackName;
+        let attackTwoName = this.registry.values.currentCharacter.moveset[1].attackName;
 
         this.attackButton.on('pointerdown', function(pointer) {
             //WORKING NOW
             this.firstOptionsInvisible();
-            this.box1.setVisible(false);
+            this.battleSelectionBox.setVisible(false);
             this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/6,'yellowButton').setInteractive().setScale(1.5);
-            this.attackText1 = this.add.text(0,0, "Attack1",{font: "35px Arial", fill: "brown"});
+            this.attackText1 = this.add.text(0,0, attackOneName,{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText1, this.attack1);
 
-            this.attack1.on('pointerover', function(pointer) {this.box2.setVisible(true)}.bind(this));
-            this.attack1.on('pointerout',function(pointer){this.box2.setVisible(false)}.bind(this));
+            // ATTACK1 FUNCTIONALITY
+            this.attack1.on('pointerover', function(pointer) {this.attackBox1.setVisible(true)}.bind(this));
+            this.attack1.on('pointerout',function(pointer){this.attackBox1.setVisible(false)}.bind(this));
             this.attack1.on('pointerdown',function(pointer){
-                this.box_attack1.setVisible(true);
-                this.box_attack2.setVisible(false);
-                this.box_attack3.setVisible(false);
+
+                let selectedAttack = this.registry.values.currentCharacter.moveset[0];
+                this.registry.set("selectedAttack", selectedAttack);
+                //emit event
+                this.events.emit('selectedAttack', selectedAttack);
+
             }.bind(this));
 
-
             this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/6*2,'yellowButton').setInteractive().setScale(1.5);
-            this.attackText2 = this.add.text(0,0, "Attack2",{font: "35px Arial", fill: "brown"});
+            this.attackText2 = this.add.text(0,0, attackTwoName,{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText2, this.attack2);
 
-            this.attack2.on('pointerover', function(pointer) {this.box3.setVisible(true)}.bind(this));
-            this.attack2.on('pointerout',function(pointer){this.box3.setVisible(false)}.bind(this));
+            // ATTACK2 FUNCTIONALITY
+            this.attack2.on('pointerover', function(pointer) {this.attackBox2.setVisible(true)}.bind(this));
+            this.attack2.on('pointerout',function(pointer){this.attackBox2.setVisible(false)}.bind(this));
             this.attack2.on('pointerdown',function(pointer){
-                this.box_attack1.setVisible(false);
-                this.box_attack2.setVisible(true);
-                this.box_attack3.setVisible(false);
+
+                let selectedAttack = this.registry.values.currentCharacter.moveset[1];
+                this.registry.set("selectedAttack", selectedAttack);
+                //emit event
+                this.events.emit('selectedAttack', selectedAttack);
+
             }.bind(this));
 
             this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/6*3,'yellowButton').setInteractive().setScale(1.5);
             this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText3, this.attack3);
 
-            this.attack3.on('pointerover', function(pointer) {this.box4.setVisible(true)}.bind(this));
-            this.attack3.on('pointerout',function(pointer){this.box4.setVisible(false)}.bind(this));
+            this.attack3.on('pointerover', function(pointer) {this.attackBox3.setVisible(true)}.bind(this));
+            this.attack3.on('pointerout',function(pointer){this.attackBox3.setVisible(false)}.bind(this));
             this.attack3.on('pointerdown',function(pointer){
-                this.box_attack1.setVisible(false);
-                this.box_attack2.setVisible(false);
-                this.box_attack3.setVisible(true);
+
+
             }.bind(this))
 
             this.backButton = this.add.sprite(WIDTH/2,HEIGHT/6*4,'yellowButton').setInteractive().setScale(1.5);
@@ -93,65 +103,47 @@ class UIScene extends Phaser.Scene {
             this.backButton.on('pointerdown',function(pointer){
                 this.secondMenuInvisible();
                 this.firstMenuVisible();
-                this.box1.setVisible(true);
-                this.box_attack1.setVisible(false);
-                this.box_attack2.setVisible(false);
-                this.box_attack3.setVisible(false);
+                this.battleSelectionBox.setVisible(true);
+                this.battleDialogueBox.setVisible(false);
+
             }.bind (this));
         }.bind(this));
 
         //create textBox
-        this.box1 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+        this.battleSelectionBox = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
             wrapWidth: WIDTH/2,
             fixedWidth: WIDTH/2,
             fixedHeight: 150,
         })
-        .start(content3, 50);
+        .start(battleSelectionDialogue, 50);
         
-        this.box2 = createTextBox(this, WIDTH/3,HEIGHT/5, {
+        this.attackBox1 = createTextBox(this, WIDTH/3,HEIGHT/5, {
             wrapWidth: WIDTH/3,
             fixedWidth: WIDTH/3.5,
             fixedHeight: 50,
         })
-        .start(content4, 50).setVisible(false)
+        .start(attackDescription1, 50).setVisible(false)
 
-        this.box3 = createTextBox(this, WIDTH/3,HEIGHT/5*1.82, {
+        this.attackBox2 = createTextBox(this, WIDTH/3,HEIGHT/5*1.82, {
             wrapWidth: WIDTH/3,
             fixedWidth: WIDTH/3.5,
             fixedHeight: 50,
         })
-        .start(content5, 50).setVisible(false)
+        .start(attackDescription2, 50).setVisible(false)
 
-        this.box4 = createTextBox(this, WIDTH/3,HEIGHT/5*2.65, {
+        this.attackBox3 = createTextBox(this, WIDTH/3,HEIGHT/5*2.65, {
             wrapWidth: WIDTH/3,
             fixedWidth: WIDTH/3.5,
             fixedHeight: 50,
         })
-        .start(content6, 20).setVisible(false)
+        .start(attackDescription3, 20).setVisible(false)
 
-        this.box_attack1 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
+        this.battleDialogueBox = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
             wrapWidth: WIDTH/2,
             fixedWidth: WIDTH/2,
             fixedHeight: 150,
         })
-        .start(content_attack1, 50).setVisible(false)
-
-        
-        this.box_attack2 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
-            wrapWidth: WIDTH/2,
-            fixedWidth: WIDTH/2,
-            fixedHeight: 150,
-        })
-        .start(content_attack2, 50).setVisible(false)
-
-        
-        this.box_attack3 = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
-            wrapWidth: WIDTH/2,
-            fixedWidth: WIDTH/2,
-            fixedHeight: 150,
-        })
-        .start(content_attack3, 50).setVisible(false)
-
+        .start(placeholderDialogue, 50).setVisible(false)
 
         //ITEM BUTTON
         this.itemButton = this.add.sprite(WIDTH/2,HEIGHT/2,'yellowButton').setInteractive().setScale(1.5)
@@ -187,15 +179,51 @@ class UIScene extends Phaser.Scene {
 
         //test if import works
         // SHOULD SAY: 'WILL PERFORM BASIC ATTACK.' in action state
-        let test = this.registry.get("shark").moveset[0].description;
-        this.add.text(20, 80, test, {font: "25px Arial", fill: "yellow"}).setDepth(20);
-    }
-    update(){}
+        //let test = this.registry.get("shark").moveset[0].description;
+        //this.add.text(20, 80, test, {font: "25px Arial", fill: "yellow"}).setDepth(20);
 
-    returnObject(o)
-	{
-		return o;
-	}
+        /*
+        let chara = this.registry.get("shark");
+        let moo = chara.currentHealth - 20;
+        chara.currentHealth = moo;
+        this.registry.set("shark", chara);
+        let newchara = this.registry.get("shark");
+        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        */
+
+        /*
+        //FUNCTIONALITY TESTING
+        let chara = this.registry.get("shark");
+        let moo = chara.currentHealth - 20;
+        chara.currentHealth = moo;
+        this.registry.set("shark", chara);
+        // change access values through values key
+        this.registry.values.shark.currentHealth += 5;
+        let newchara = this.registry.values.shark;
+        this.add.text(20, 80, newchara.currentHealth, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        */
+
+        // TEST TEXT
+        //let ya = this.registry.values.currentCharacter.moveset[0].description;
+        //this.add.text(20, 80, ya, {font: "25px Arial", fill: "yellow"}).setDepth(20);
+
+        this.scene.get('HealthBar').events.on("completedAttack", this.updateDialogue.bind(this));
+    }
+
+    updateDialogue(someString){
+        this.battleDialogueBox.text = someString;
+        this.battleDialogueBox.setVisible(true);
+    }
+
+    update(){
+        attackDescription1 = this.registry.values.currentCharacter.moveset[0].description;
+        attackDescription2 = this.registry.values.currentCharacter.moveset[1].description;
+        
+        //works
+        this.attackBox1.text = attackDescription1;
+        this.attackBox2.text = attackDescription2;
+
+    }
 
     firstOptionsInvisible(){
         this.attackButton.setVisible(false);

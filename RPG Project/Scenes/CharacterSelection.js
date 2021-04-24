@@ -42,13 +42,19 @@ class CharacterSelection extends Phaser.Scene {
         this.input.on('pointerover',function(event,gameObjects){gameObjects[0].setTexture('yellowButton1')});
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
         
+        //grab name
+        var chara2name = this.registry.values.shark.name;
+        var shark = this.registry.values.shark;
+
+
         //the second button
         this.add.image(WIDTH/2,HEIGHT/3,"character2").setScale(2)
         this.Button2 = this.add.sprite(WIDTH/2,HEIGHT/3*1.9,'yellowButton').setInteractive().setScale(1.2)
-        this.Text2 = this.add.text(0,0, "Warrior",{font: "32px Arial", fill: "brown"})
+        this.Text2 = this.add.text(0,0, chara2name,{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text2, this.Button2)
         this.Button2.on('pointerdown', function (pointer) {
             this.sound.stopAll();
+            this.registry.set("currentCharacter", shark);
             this.scene.start("action",{id:1, image:'warrior.png'})
         }.bind(this));
 

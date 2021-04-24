@@ -32,6 +32,12 @@ class ActionScene extends Phaser.Scene {
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
 
+        //set some variables
+        let currentEnemy = this.registry.values.basicEnemy;
+        this.registry.set("currentEnemy", currentEnemy);
+        this.registry.values.currentEnemy.accuracy = 1;
+        this.registry.values.currentCharacter.accuracy = 1;
+
         this.scene.launch('UIScene') // Run UI Scene at the same time
         this.scene.launch('HealthBar') // Run UI Scene at the same time
 
