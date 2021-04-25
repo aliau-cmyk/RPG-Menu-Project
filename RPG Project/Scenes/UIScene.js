@@ -11,7 +11,23 @@ var battleSelectionDialogue = "Choose an an action!";
 var attackDescription1 = "add descriptions here(attack 1)";
 var attackDescription2 = "add descriptions here(attack 2)";
 var attackDescription3 = "add descriptions here(attack 3)";
-var placeholderDialogue = "some battle dialogue1";
+var placeholderDialogue = `test 
+
+
+
+test
+
+
+
+test
+
+
+
+test
+
+
+
+test`;
 
 
 class UIScene extends Phaser.Scene {
@@ -61,6 +77,7 @@ class UIScene extends Phaser.Scene {
             this.attack1.on('pointerover', function(pointer) {this.attackBox1.setVisible(true)}.bind(this));
             this.attack1.on('pointerout',function(pointer){this.attackBox1.setVisible(false)}.bind(this));
             this.attack1.on('pointerdown',function(pointer){
+                this.scene.run('battleDialogue');
 
                 let selectedAttack = this.registry.values.currentCharacter.moveset[0];
                 this.registry.set("selectedAttack", selectedAttack);
@@ -77,6 +94,7 @@ class UIScene extends Phaser.Scene {
             this.attack2.on('pointerover', function(pointer) {this.attackBox2.setVisible(true)}.bind(this));
             this.attack2.on('pointerout',function(pointer){this.attackBox2.setVisible(false)}.bind(this));
             this.attack2.on('pointerdown',function(pointer){
+                this.scene.run('battleDialogue');
 
                 let selectedAttack = this.registry.values.currentCharacter.moveset[1];
                 this.registry.set("selectedAttack", selectedAttack);
@@ -92,7 +110,7 @@ class UIScene extends Phaser.Scene {
             this.attack3.on('pointerover', function(pointer) {this.attackBox3.setVisible(true)}.bind(this));
             this.attack3.on('pointerout',function(pointer){this.attackBox3.setVisible(false)}.bind(this));
             this.attack3.on('pointerdown',function(pointer){
-
+                this.scene.run('battleDialogue');
 
             }.bind(this))
 
@@ -101,15 +119,17 @@ class UIScene extends Phaser.Scene {
             centerButtonText(this.backText, this.backButton);
 
             this.backButton.on('pointerdown',function(pointer){
+                this.scene.sleep('battleDialogue');
                 this.secondMenuInvisible();
                 this.firstMenuVisible();
                 this.battleSelectionBox.setVisible(true);
-                this.battleDialogueBox.setVisible(false);
+                //this.battleDialogueBox.setVisible(false);
 
             }.bind (this));
         }.bind(this));
 
         //create textBox
+        
         this.battleSelectionBox = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
             wrapWidth: WIDTH/2,
             fixedWidth: WIDTH/2,
@@ -137,13 +157,16 @@ class UIScene extends Phaser.Scene {
             fixedHeight: 50,
         })
         .start(attackDescription3, 20).setVisible(false)
-
+       
+        /*
         this.battleDialogueBox = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
             wrapWidth: WIDTH/2,
             fixedWidth: WIDTH/2,
             fixedHeight: 150,
         })
-        .start(placeholderDialogue, 50).setVisible(false)
+        .start(placeholderDialogue,50).setVisible(false)
+        */
+        
 
         //ITEM BUTTON
         this.itemButton = this.add.sprite(WIDTH/2,HEIGHT/2,'yellowButton').setInteractive().setScale(1.5)
@@ -267,7 +290,8 @@ var CreateAlertDialog = function (scene) {
         background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 80, 0x4e342e),
 
         content: scene.add.text(0, 0, '', {
-            fontSize: '40px'
+            fontSize: '40px',
+            fontFamily: 'font1'
         }),
 
         actions: [

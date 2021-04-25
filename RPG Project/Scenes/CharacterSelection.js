@@ -1,4 +1,12 @@
-var content2 = "Choose the character to start your adventure here!"
+var content2 = `Choose the character to start your adventure here!
+
+
+
+test
+
+
+
+test`
 
 class CharacterSelection extends Phaser.Scene {
     constructor() {
@@ -35,6 +43,7 @@ class CharacterSelection extends Phaser.Scene {
         centerButtonText(this.Text1, this.Button1)
         this.Button1.on('pointerdown', function (pointer) {
             this.sound.stopAll();
+            //this.registry.set("1", archer);
             this.scene.start("action",{id:0, image:'character_femaleAdventurer_idle.png'})
         }.bind(this));
         
@@ -44,7 +53,9 @@ class CharacterSelection extends Phaser.Scene {
         
         //grab name
         var chara2name = this.registry.values.shark.name;
+        //var chara1name = this.registry.values.archer.name;
         var shark = this.registry.values.shark;
+        //var archer = this.registry.values.archer;
 
 
         //the second button

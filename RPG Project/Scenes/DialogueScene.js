@@ -12,6 +12,7 @@ class DialogueScene extends Phaser.Scene {
         });
         this.load.image('warrior', 'assets/images/warrior.png')
         this.load.image('arrowSilver', 'assets/images/arrowSilver_right.png')
+        this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
 
         //source: https://soundimage.org/looping-music/
         this.load.audio('bgmusic', 'assets/music/Quirky-Puzzle-Game-Menu.mp3');
@@ -116,7 +117,7 @@ var createTextBox = function (scene, x, y, config) {
             action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
             space: {
                 left: 80,
-                right: 0,
+                right: 20,
                 top: 40,
                 bottom: 20,
                 icon: 10,
@@ -129,23 +130,20 @@ var createTextBox = function (scene, x, y, config) {
     textBox  //set interactive to the text box
         .setInteractive()
         .on('pointerdown', function () {
-            //var icon = this.getElement('action').setVisible(false);
-            //this.resetChildVisibleState(icon);
+            var icon = this.getElement('action').setVisible(false);
+            this.resetChildVisibleState(icon);
             if (this.isTyping) {
                 this.stop(true); // stop and show the all words
             } else {
                 this.typeNextPage(); // just show the words of next page
             }
         }, textBox)
-        /*.on('pageend', function () {
+        .on('pageend', function () {
             if (textBox.isLastPage) {
-                //var isLastPage = textBox.isLastPage
-                //var nextButton = this.add.image(1000,1000,"nextButton").setScale(0.5)
-                //nextButton.input.on('gameobjectdown', this.scene.start("select the character"));
-                //textBox.setInteractive().on('pointerdown', this.scene.start("select the character"))
+                return
             }
             
-            /*var icon = this.getElement('action').setVisible(true);
+            var icon = this.getElement('action').setVisible(true);
             this.resetChildVisibleState(icon);
             icon.y -= 30;
             var tween = scene.tweens.add({
@@ -156,7 +154,7 @@ var createTextBox = function (scene, x, y, config) {
                 repeat: 0, // -1: infinity
                 yoyo: false
             });
-        }, textBox)*/
+        }, textBox)
 
     return textBox;
 }
@@ -166,7 +164,8 @@ var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
     return scene.rexUI.add.BBCodeText(0, 0, '', {
         fixedWidth: fixedWidth,
         fixedHeight: fixedHeight,
-        fontSize: '30px',
+        fontFamily: 'font1',
+        fontSize: '35px',
         wrap: {
             //mode: 'word',
             width: wrapWidth
@@ -174,6 +173,7 @@ var getBBcodeText = function (scene, wrapWidth, fixedWidth, fixedHeight) {
         maxLines: 4,
     })
 }
+
 
 
 

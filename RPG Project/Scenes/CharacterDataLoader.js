@@ -18,7 +18,7 @@ class CharacterDataLoader extends Phaser.Scene {
 
         this.throwDust = {
             attackName : "Throw Dust",
-            description : "Throw dust into enemy's eyes. Lowers their accuracy by 25%!",
+            description : "Throw dust into enemy's eyes.",
             power : 0,
             accuracy : 1,
             stamina : 15,

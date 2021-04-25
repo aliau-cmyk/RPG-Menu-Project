@@ -1,4 +1,3 @@
-
 var testtext;
 var dialogueString;
 var myHealthBar;
@@ -19,10 +18,8 @@ class HealthBar extends Phaser.Scene {
         myHealthBar=this.makeBar(WIDTH/100*10,HEIGHT/100*10,0x2ecc71);
         this.setValue(myHealthBar,1);
 
-
         enemyHealthBar=this.makeBar(WIDTH/2 + WIDTH/100*20, HEIGHT/100*10,0x2ecc71);
         this.setValue(enemyHealthBar,1);
-
 
         // test text
         testtext = this.add.text(20, 100, "Nothing Selected", {font: "25px Arial", fill: "yellow"}).setDepth(20);
@@ -88,8 +85,6 @@ class HealthBar extends Phaser.Scene {
         let charaAccuracy = this.registry.values.currentCharacter.accuracy;
         
 
-        
-        
         if (this.chanceToMiss(initAccuracy, charaAccuracy)){
             dialogueString += "You missed your Attack";
             dialogueString += '\n';
@@ -134,6 +129,7 @@ class HealthBar extends Phaser.Scene {
     enemyDamageCalculator(attackObject){
 
     }
+
 
     chanceToMiss(initAccuracy, charaAccuracy){
         
