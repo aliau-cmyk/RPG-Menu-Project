@@ -9,7 +9,15 @@ var config = {
         height: 1080
     },
     // scenes are put into array for config
-    scene: [StartScene, CharacterDataLoader, DialogueScene, CharacterSelection, ActionScene, UIScene, HealthBar]
+    scene: [
+        StartScene, 
+        CharacterDataLoader, 
+        DialogueScene, 
+        CharacterSelection, 
+        ActionScene, 
+        UIScene, 
+        HealthBar,
+        BattleDialogue]
 }
 
 // create an instance of the game
