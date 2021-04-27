@@ -15,15 +15,15 @@ var placeholderDialogue = `test
 
 
 
-test
+1
 
 
 
-test
+2
 
 
 
-test
+3
 
 
 
@@ -51,6 +51,7 @@ class UIScene extends Phaser.Scene {
 	    //this.load.image('left-cap-shadow', 'assets/images/barHorizontal_shadow_left.png');
 	    //this.load.image('middle-shadow', 'assets/images/barHorizontal_shadow_mid.png');
 	    //this.load.image('right-cap-shadow', 'assets/images/barHorizontal_shadow_right.png');
+
     }
     create(){
         const WIDTH = this.sys.game.config.width;
@@ -77,7 +78,6 @@ class UIScene extends Phaser.Scene {
             this.attack1.on('pointerover', function(pointer) {this.attackBox1.setVisible(true)}.bind(this));
             this.attack1.on('pointerout',function(pointer){this.attackBox1.setVisible(false)}.bind(this));
             this.attack1.on('pointerdown',function(pointer){
-                this.scene.run('battleDialogue');
 
                 let selectedAttack = this.registry.values.currentCharacter.moveset[0];
                 this.registry.set("selectedAttack", selectedAttack);
@@ -94,7 +94,6 @@ class UIScene extends Phaser.Scene {
             this.attack2.on('pointerover', function(pointer) {this.attackBox2.setVisible(true)}.bind(this));
             this.attack2.on('pointerout',function(pointer){this.attackBox2.setVisible(false)}.bind(this));
             this.attack2.on('pointerdown',function(pointer){
-                this.scene.run('battleDialogue');
 
                 let selectedAttack = this.registry.values.currentCharacter.moveset[1];
                 this.registry.set("selectedAttack", selectedAttack);
@@ -110,7 +109,7 @@ class UIScene extends Phaser.Scene {
             this.attack3.on('pointerover', function(pointer) {this.attackBox3.setVisible(true)}.bind(this));
             this.attack3.on('pointerout',function(pointer){this.attackBox3.setVisible(false)}.bind(this));
             this.attack3.on('pointerdown',function(pointer){
-                this.scene.run('battleDialogue');
+
 
             }.bind(this))
 
@@ -233,10 +232,24 @@ class UIScene extends Phaser.Scene {
         this.scene.get('HealthBar').events.on("completedAttack", this.updateDialogue.bind(this));
     }
 
+    
     updateDialogue(someString){
-        this.battleDialogueBox.text = someString;
-        this.battleDialogueBox.setVisible(true);
+        let formattedString = this.formatString(someString);
+        placeholderDialogue = formattedString;
+
+        this.scene.run('battleDialogue');
+
+        // BREAKS HERE
+        //let meow = "MEOW\nMEOW"
+        //this.TESTTEXT = this.add.text(0,0, this.formatString(meow),{font: "100px Arial", fill: "brown"});
+
     }
+
+    formatString(someString){
+        let newString = someString.replaceAll(/\n/g, '\n\n\n\n');
+        return newString;
+    }
+    
 
     update(){
         attackDescription1 = this.registry.values.currentCharacter.moveset[0].description;

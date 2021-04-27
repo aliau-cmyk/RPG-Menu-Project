@@ -1,12 +1,6 @@
-var content2 = `Choose the character to start your adventure here!
+var content2 = `Choose the character to start your adventure here!`
 
-
-
-test
-
-
-
-test`
+// content expandable
 
 class CharacterSelection extends Phaser.Scene {
     constructor() {

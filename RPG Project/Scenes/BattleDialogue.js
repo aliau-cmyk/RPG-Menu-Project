@@ -29,13 +29,6 @@ class BattleDialogue extends Phaser.Scene {
 
     }
 
-    
-    /*
-    updateDialogue(someString){
-        this.battleDialogueBox.text = someString;
-        this.battleDialogueBox.setVisible(true);
-    }
-    */
 
     update() {}
 }

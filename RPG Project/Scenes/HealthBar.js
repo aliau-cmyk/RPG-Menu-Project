@@ -8,9 +8,15 @@ class HealthBar extends Phaser.Scene {
         super('HealthBar');
     }
     
-    preload() {}
+    preload() {
+        this.load.audio('yourAttack', 'assets/music/Laser-Shot-1.mp3');
+        this.load.audio('enemyAttack', 'assets/music/Laser-Shot-2.mp3');
+    }
 
     create() {
+        this.yourAttack = this.sound.add('yourAttack');
+        this.enemyAttack = this.sound.add('enemyAttack');
+
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
 
@@ -69,7 +75,17 @@ class HealthBar extends Phaser.Scene {
         this.aded.text(20, 120, dialogueString, {font: "25px Arial", fill: "yellow"}).setDepth(20);
     }
 
+    playYourSFX(){
+        this.yourAttack.play();
+    }
+
+    playEnemySFX(){
+        this.enemyAttack.play();
+    }
+
     damageCalculator(attackObject){
+        this.playYourSFX();
+
         dialogueString = "";
         // Testing calls
         // testtext.setText("is working?");
@@ -78,7 +94,6 @@ class HealthBar extends Phaser.Scene {
         let attackName = attackObject.attackName;
 
         dialogueString += `${charaName} tried to use ${attackName}.`;
-        dialogueString += '\n';
 
         
         let initAccuracy = attackObject.accuracy;
@@ -86,8 +101,8 @@ class HealthBar extends Phaser.Scene {
         
 
         if (this.chanceToMiss(initAccuracy, charaAccuracy)){
-            dialogueString += "You missed your Attack";
             dialogueString += '\n';
+            dialogueString += "You missed your Attack";
         }
         else{
             // subtract health, and if less than 0, make it 0
@@ -107,9 +122,13 @@ class HealthBar extends Phaser.Scene {
             let enemyTotalHealth = this.registry.values.currentEnemy.maxHealth;
             let enemyHealth = this.registry.values.currentEnemy.currentHealth;
 
-            dialogueString += `Your ${attackName} did ${attackPower} to the enemy.\n`;
-            dialogueString += `The enemy now has ${enemyHealth} / ${enemyTotalHealth} health.\n`;
+            dialogueString += `\nYour ${attackName} did ${attackPower} dmg to the enemy.`;
         }
+
+        // For scope
+        let enemyTotalHealth = this.registry.values.currentEnemy.maxHealth;
+        let enemyHealth = this.registry.values.currentEnemy.currentHealth;
+        dialogueString += `\nThe enemy now has ${enemyHealth} / ${enemyTotalHealth} health.`;
 
         // accuracy lowered?
         if(attackObject.effect == "accuracy"){
@@ -117,16 +136,70 @@ class HealthBar extends Phaser.Scene {
             //how much you are lowering opponent's accuracy
             let effectValue = attackObject.effectValue;
             let accuracyLowered = (1 - effectValue) * 100;
-            dialogueString += `You lowered your enemy's accuracy by ${accuracyLowered}%.\n`;
+            dialogueString += `\nYou lowered your enemy's accuracy by ${accuracyLowered}%.`;
         }
         
         testtext.setText(dialogueString);
 
-        this.events.emit("completedAttack", dialogueString);
+
+        //To complete action...
+        //this.events.emit("completedAttack", dialogueString);
+
+        let weakAttack = this.registry.values.weakAttack;
+        this.enemyDamageCalculator(weakAttack);
+
         
     }
 
     enemyDamageCalculator(attackObject){
+        //this.events.emit("completedAttack", dialogueString);
+
+        this.playEnemySFX();
+
+        let enemyName = this.registry.values.currentEnemy.name;
+        let attackName = attackObject.attackName;
+
+        dialogueString += `\n${enemyName} tried to use ${attackName}.`;
+
+        let initAccuracy = attackObject.accuracy;
+        let enemyAccuracy = this.registry.values.currentEnemy.accuracy;
+        
+
+        if (this.chanceToMiss(initAccuracy, enemyAccuracy)){
+            dialogueString += '\n';
+            dialogueString += `${enemyName} missed the Attack.`;
+        }
+        else{
+            // subtract health, and if less than 0, make it 0
+            this.registry.values.currentCharacter.currentHealth -= attackObject.power;
+            
+            if (this.registry.values.currentCharacter.currentHealth < 0){
+                this.registry.values.currentCharacter.currentHealth = 0;
+            }
+            
+            // get percentage
+            let percent = this.registry.values.currentCharacter.currentHealth / this.registry.values.currentCharacter.maxHealth;
+            
+            // set value of hp bar
+            this.setValue(myHealthBar, percent);
+
+            let attackPower = attackObject.power;
+            let yourTotalHealth = this.registry.values.currentCharacter.maxHealth;
+            let yourHealth = this.registry.values.currentCharacter.currentHealth;
+
+            dialogueString += `\n${enemyName}'s ${attackName} did ${attackPower} dmg to you.`;
+        }
+
+        // For scope
+        let yourTotalHealth = this.registry.values.currentCharacter.maxHealth;
+        let yourHealth = this.registry.values.currentCharacter.currentHealth;
+
+        dialogueString += `\nYou now have ${yourHealth} / ${yourTotalHealth} health.`;
+        
+
+        testtext.setText(dialogueString);
+
+        this.events.emit("completedAttack", dialogueString);
 
     }
 
