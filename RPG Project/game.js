@@ -17,7 +17,10 @@ var config = {
         ActionScene, 
         UIScene, 
         HealthBar,
-        BattleDialogue]
+        BattleDialogue,
+        WinScene,
+        LoseScene,
+        EndUIScene]
 }
 
 // create an instance of the game
