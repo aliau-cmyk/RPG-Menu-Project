@@ -58,7 +58,6 @@ class StartScene extends Phaser.Scene {
         // clicking startButton will change scene
         this.input.on('gameobjectdown', this.changeScene, this);
 
-        
         // button hover, colors
         /*startButton.on('pointerover', function (pointer) {
             //this.setTint(0xff0000);
@@ -72,7 +71,7 @@ class StartScene extends Phaser.Scene {
     
         startButton.on('pointerup', function (pointer) {
             this.clearTint();
-        });*/
+        }); */
     
         //Button hover
         this.startButton.on('pointerdown', function (pointer) {
@@ -88,7 +87,9 @@ class StartScene extends Phaser.Scene {
         this.input.on('pointerup', function (event,gameObjects) {
             gameObjects[0].setTexture('startButtonHover')
         })
+       
     }
 
     update(){}
+
 }

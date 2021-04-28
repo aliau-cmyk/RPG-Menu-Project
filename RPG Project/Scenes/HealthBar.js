@@ -111,6 +111,7 @@ class HealthBar extends Phaser.Scene {
             if (this.registry.values.currentEnemy.currentHealth < 0){
                 this.registry.values.currentEnemy.currentHealth = 0;
             }
+
             
             // get percentage
             let percent = this.registry.values.currentEnemy.currentHealth / this.registry.values.currentEnemy.maxHealth;
@@ -129,6 +130,7 @@ class HealthBar extends Phaser.Scene {
         let enemyTotalHealth = this.registry.values.currentEnemy.maxHealth;
         let enemyHealth = this.registry.values.currentEnemy.currentHealth;
         dialogueString += `\nThe enemy now has ${enemyHealth} / ${enemyTotalHealth} health.`;
+
 
         // accuracy lowered?
         if(attackObject.effect == "accuracy"){
