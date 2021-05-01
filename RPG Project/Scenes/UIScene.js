@@ -250,6 +250,7 @@ class UIScene extends Phaser.Scene {
         return newString;
     }
     
+    
 
     update(){
         attackDescription1 = this.registry.values.currentCharacter.moveset[0].description;

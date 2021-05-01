@@ -46,13 +46,29 @@ class ActionScene extends Phaser.Scene {
         //this.player = this.add.image(0,0,this.selectedCharacter).setScale(0.05)
         this.add.image(WIDTH/5,HEIGHT/5*2,'pic'+ this.imageID).setScale(2.5);
         this.add.image(WIDTH/5*4,HEIGHT/2,'enemy').setScale(2.5);
-        this.startBattle();
-        // on wake event we call startBattle too
-        this.sys.events.on('wake', this.startBattle, this);
 
-    }   
-    
-    update(){}
+        this.TESTTEXT = this.add.text(0,0, "meow",{font: "100px Arial", fill: "brown"});
+
+        this.scene.get('HealthBar').events.on("completedAttack", this.winlosecondition.bind(this));
+
+    }
+
+    winlosecondition(){
+        let yourHealth = this.registry.values.currentCharacter.currentHealth;
+        let enemyHealth = this.registry.values.currentEnemy.currentHealth;
+
+        if (yourHealth == 0){
+            this.scene.start("lose");
+        }
+
+        if (enemyHealth == 0){
+            this.scene.start("win");
+        }
+    }
+
+    update(){
+
+    }
 }
 
 
