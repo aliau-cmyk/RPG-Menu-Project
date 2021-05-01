@@ -20,7 +20,7 @@ var config = {
         BattleDialogue,
         WinScene,
         LoseScene,
-        EndUIScene]
+    /*EndUIScene*/]
 }
 
 // create an instance of the game
