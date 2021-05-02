@@ -30,14 +30,20 @@ class CharacterSelection extends Phaser.Scene {
         this.add.image(WIDTH/2,HEIGHT/2,"castle");
         this.add.text(20, 20, "Select the character", {font: "25px Arial", fill: "yellow"});
 
+        //grab name
+        let chara1name = this.registry.values.elda.name;
+        let elda = this.registry.values.elda;
+ 
+
         //the first button
         this.add.image(WIDTH/4,HEIGHT/3,"character1").setScale(2)
         this.Button1 = this.add.sprite(WIDTH/4,HEIGHT/3*1.9,'yellowButton').setInteractive().setScale(1.2)
-        this.Text1 = this.add.text(0,0, "Archer",{font: "32px Arial", fill: "brown"})
+        this.Text1 = this.add.text(0,0, chara1name,{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text1, this.Button1)
         this.Button1.on('pointerdown', function (pointer) {
             this.sound.stopAll();
-            //this.registry.set("1", archer);
+            
+            this.registry.set("currentCharacter", elda);
             this.scene.start("action",{id:0, image:'character_femaleAdventurer_idle.png'})
         }.bind(this));
         
@@ -46,10 +52,8 @@ class CharacterSelection extends Phaser.Scene {
         this.input.on('pointerout',function(event,gameObjects){gameObjects[0].setTexture('yellowButton')});
         
         //grab name
-        var chara2name = this.registry.values.shark.name;
-        //var chara1name = this.registry.values.archer.name;
-        var shark = this.registry.values.shark;
-        //var archer = this.registry.values.archer;
+        let chara2name = this.registry.values.shark.name;
+        let shark = this.registry.values.shark;
 
 
         //the second button
@@ -63,13 +67,18 @@ class CharacterSelection extends Phaser.Scene {
             this.scene.start("action",{id:1, image:'warrior.png'})
         }.bind(this));
 
+        //grab name
+        let chara3name = this.registry.values.lucas.name;
+        let lucas = this.registry.values.lucas;
+
         // the third button
         this.add.image(WIDTH/4*3,HEIGHT/3,"character3").setScale(2)
         this.Button3 = this.add.sprite(WIDTH/4*3,HEIGHT/3*1.9,'yellowButton').setInteractive().setScale(1.2)
-        this.Text3 = this.add.text(0,0,"Adventurer",{font: "32px Arial", fill: "brown"})
+        this.Text3 = this.add.text(0,0, chara3name,{font: "32px Arial", fill: "brown"})
         centerButtonText(this.Text3, this.Button3)
         this.Button3.on('pointerdown', function (pointer) {
             this.sound.stopAll();
+            this.registry.set("currentCharacter", lucas);
             this.scene.start("action",{id:2, image:'adventurer_idle.png'})
         }.bind(this));
 

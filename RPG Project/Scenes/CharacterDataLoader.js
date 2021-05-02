@@ -27,6 +27,28 @@ class CharacterDataLoader extends Phaser.Scene {
             effectValue : .75
         };
 
+        this.burnyBurn = {
+            attackName : "Burny Burn",
+            description : "Has a 90% chance of burning opponent. Burning does 20 dmg each turn to opponent.",
+            power : 0,
+            accuracy : .9,
+            stamina : 15,
+            currentStamina : 15,
+            effect : "burn",
+            effectValue : 20
+        }
+
+        this.poisonousStab = {
+            attackName : "Poisonous Stab",
+            description : "Does 10 dmg to opponent. Poisons opponent. Poison does 5 dmg each turn to opponent.",
+            power : 10,
+            accuracy : 1,
+            stamina : 15,
+            currentStamina : 15,
+            effect : "poison",
+            effectValue : 5
+        }
+
         this.weakAttack = {
             attackName : "Weak Attack",
             description : "Will perform a weak attack.",
@@ -52,6 +74,20 @@ class CharacterDataLoader extends Phaser.Scene {
             moveset : [this.basicAttack, this.throwDust]
         };
 
+        this.elda = {
+            name: "Elda",
+            maxHealth: 100,
+            currentHealth: 100,
+            moveset : [this.basicAttack, this.burnyBurn]
+        }
+
+        this.lucas = {
+            name: "Lucas",
+            maxHealth: 100,
+            currentHealth: 100,
+            moveset : [this.basicAttack, this.poisonousStab]
+        }
+
         this.getMoveByName = function(movesetArray, nameOfAttack) {
             for (var i = 0; i < movesetArray.length; i++){
                 if (movesetArray[i].attackName = nameOfAttack){
@@ -69,9 +105,13 @@ class CharacterDataLoader extends Phaser.Scene {
         // https://photonstorm.github.io/phaser3-docs/Phaser.Data.DataManager.html
         this.registry.set("basicAttack", this.basicAttack);
         this.registry.set("throwDust", this.throwDust);
+        this.registry.set("burnyBurn", this.throwDust);
+        this.registry.set("poisonousStab", this.throwDust);
         this.registry.set("weakAttack", this.weakAttack);
         this.registry.set("basicEnemy", this.basicEnemy);
         this.registry.set("shark", this.shark);
+        this.registry.set("elda", this.elda);
+        this.registry.set("lucas", this.lucas);
         this.registry.set("getMoveByName", this.getMoveByName);
         
         //THIS WORKS!!!

@@ -33,6 +33,8 @@ class HealthBar extends Phaser.Scene {
 
         // NOTE .bind is needed for .this to refer to the game in a method not part of phaser
         this.scene.get('UIScene').events.on("selectedAttack", this.damageCalculator.bind(this));
+
+        this.scene.get('action').events.on("endMusic", this.endMusic.bind(this));
     }
 
     //this.add.image(WIDTH/5,HEIGHT/5*2,'pic'+ this.imageID).setScale(2.5);
@@ -83,6 +85,11 @@ class HealthBar extends Phaser.Scene {
         this.enemyAttack.play();
     }
 
+    endMusic(){
+        this.yourAttack.stop();
+        this.enemyAttack.stop();
+    }
+
     damageCalculator(attackObject){
         this.playYourSFX();
 
@@ -124,6 +131,62 @@ class HealthBar extends Phaser.Scene {
             let enemyHealth = this.registry.values.currentEnemy.currentHealth;
 
             dialogueString += `\nYour ${attackName} did ${attackPower} dmg to the enemy.`;
+
+            // accuracy lowered?
+            if(attackObject.effect == "accuracy"){
+                this.registry.values.currentEnemy.accuracy *= attackObject.effectValue;
+                //how much you are lowering opponent's accuracy
+                let effectValue = attackObject.effectValue;
+                let accuracyLowered = (1 - effectValue) * 100;
+                dialogueString += `\nYou lowered your enemy's accuracy by ${accuracyLowered}%.`; 
+            }
+
+            //attack caused burn?
+            if(attackObject.effect == "burn"){
+                this.registry.values.currentEnemy.ailment = "burn";
+                this.registry.values.currentEnemy.ailmentvalue = attackObject.effectValue;
+
+                dialogueString += `\nEnemy was burned!`;
+            }
+
+            //attack caused poison?
+            if(attackObject.effect == "poison") {
+                this.registry.values.currentEnemy.ailment = "poison";
+                this.registry.values.currentEnemy.ailmentvalue = attackObject.effectValue;
+                dialogueString += `\nEnemy was poisoned!`;
+            }
+        }
+
+        // CHECK FOR AILMENTS
+        if(this.registry.values.currentEnemy.ailment == "burn"){
+            let ailmentValue = this.registry.values.currentEnemy.ailmentvalue;
+
+            this.registry.values.currentEnemy.currentHealth -= ailmentValue;
+            if (this.registry.values.currentEnemy.currentHealth < 0){
+                this.registry.values.currentEnemy.currentHealth = 0;
+            }
+
+            let enemyTotalHealth = this.registry.values.currentEnemy.maxHealth;
+            let enemyHealth = this.registry.values.currentEnemy.currentHealth;
+
+
+            dialogueString += `\nEnemy is burning. Enemy took ${ailmentValue} dmg.`;
+        }
+
+        if(this.registry.values.currentEnemy.ailment == "poison") {
+            let ailmentValue = this.registry.values.currentEnemy.ailmentvalue;
+
+            this.registry.values.currentEnemy.currentHealth -= ailmentValue;
+            // make sure not negative
+            if (this.registry.values.currentEnemy.currentHealth < 0){
+                this.registry.values.currentEnemy.currentHealth = 0;
+            }
+
+            let enemyTotalHealth = this.registry.values.currentEnemy.maxHealth;
+            let enemyHealth = this.registry.values.currentEnemy.currentHealth;
+
+            dialogueString += `\nEnemy is poisoned. Enemy took ${ailmentValue} dmg.`;
+
         }
 
         // For scope
@@ -131,21 +194,6 @@ class HealthBar extends Phaser.Scene {
         let enemyHealth = this.registry.values.currentEnemy.currentHealth;
         dialogueString += `\nThe enemy now has ${enemyHealth} / ${enemyTotalHealth} health.`;
 
-
-        // accuracy lowered?
-        if(attackObject.effect == "accuracy"){
-            this.registry.values.currentEnemy.accuracy *= attackObject.effectValue;
-            //how much you are lowering opponent's accuracy
-            let effectValue = attackObject.effectValue;
-            let accuracyLowered = (1 - effectValue) * 100;
-            dialogueString += `\nYou lowered your enemy's accuracy by ${accuracyLowered}%.`;
-        }
-        
-        testtext.setText(dialogueString);
-
-
-        //To complete action...
-        //this.events.emit("completedAttack", dialogueString);
 
         let weakAttack = this.registry.values.weakAttack;
         this.enemyDamageCalculator(weakAttack);

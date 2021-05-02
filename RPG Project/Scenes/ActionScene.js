@@ -38,6 +38,9 @@ class ActionScene extends Phaser.Scene {
         this.registry.values.currentEnemy.accuracy = 1;
         this.registry.values.currentCharacter.accuracy = 1;
 
+        this.registry.values.currentCharacter.ailment = "none";
+        this.registry.values.currentCharacter.ailment = "none";
+
         this.scene.launch('UIScene') // Run UI Scene at the same time
         this.scene.launch('HealthBar') // Run UI Scene at the same time
 
@@ -58,10 +61,18 @@ class ActionScene extends Phaser.Scene {
         let enemyHealth = this.registry.values.currentEnemy.currentHealth;
 
         if (yourHealth == 0){
+            this.events.emit("endMusic");
+            this.battlemusic.stop();
+            this.scene.sleep("UIScene");
+            this.scene.sleep("HealthBar");
             this.scene.start("lose");
         }
 
         if (enemyHealth == 0){
+            this.events.emit("endMusic");
+            this.battlemusic.stop();
+            this.scene.sleep("UIScene");
+            this.scene.sleep("HealthBar");
             this.scene.start("win");
         }
     }
