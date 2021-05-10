@@ -28,7 +28,7 @@ class CharacterSelection extends Phaser.Scene {
         //let scale = Math.max(scaleX, scaleY)
         //backgroundtest.setScale(scale).setScrollFactor(0)
         this.add.image(WIDTH/2,HEIGHT/2,"castle");
-        this.add.text(20, 20, "Select the character", {font: "25px Arial", fill: "yellow"});
+        //this.add.text(20, 20, "Select the character", {font: "25px Arial", fill: "yellow"});
 
         //grab name
         let chara1name = this.registry.values.elda.name;

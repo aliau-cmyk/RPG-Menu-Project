@@ -49,7 +49,7 @@ class DialogueScene extends Phaser.Scene {
         backgroundtest.setScale(scale).setScrollFactor(0)*/
         this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest");
         this.add.image(WIDTH/2,HEIGHT/5*2,"warrior").setScale(3);
-        this.add.text(20, 20, "Playing game", {font: "25px Arial", fill: "yellow"});
+        //this.add.text(20, 20, "Playing game", {font: "25px Arial", fill: "yellow"});
 
         this.nextButton = this.add.image(1800,1000,"arrowSilver").setScale(2).setInteractive()
         

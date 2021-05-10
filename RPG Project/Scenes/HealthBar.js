@@ -28,7 +28,7 @@ class HealthBar extends Phaser.Scene {
         this.setValue(enemyHealthBar,1);
 
         // test text
-        testtext = this.add.text(20, 100, "Nothing Selected", {font: "25px Arial", fill: "yellow"}).setDepth(20);
+        //testtext = this.add.text(20, 100, "Nothing Selected", {font: "25px Arial", fill: "yellow"}).setDepth(20);
         //this.scene.get('UIScene').events.on("selectedAttack", this.changeString);
 
         // NOTE .bind is needed for .this to refer to the game in a method not part of phaser
@@ -247,7 +247,7 @@ class HealthBar extends Phaser.Scene {
         dialogueString += `\nYou now have ${yourHealth} / ${yourTotalHealth} health.`;
         
 
-        testtext.setText(dialogueString);
+        //testtext.setText(dialogueString);
 
         this.events.emit("completedAttack", dialogueString);
 

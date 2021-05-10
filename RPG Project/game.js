@@ -10,8 +10,8 @@ var config = {
     },
     // scenes are put into array for config
     scene: [
-        StartScene, 
         CharacterDataLoader, 
+        StartScene, 
         DialogueScene, 
         CharacterSelection, 
         ActionScene, 

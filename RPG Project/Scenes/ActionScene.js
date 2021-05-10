@@ -45,12 +45,11 @@ class ActionScene extends Phaser.Scene {
         this.scene.launch('HealthBar') // Run UI Scene at the same time
 
         this.add.image(WIDTH/2,HEIGHT/2,"nightMountain")
-        this.add.text(20, 20, "Take the Action", {font: "25px Arial", fill: "yellow"});
+        //this.add.text(20, 20, "Take the Action", {font: "25px Arial", fill: "yellow"});
         //this.player = this.add.image(0,0,this.selectedCharacter).setScale(0.05)
         this.add.image(WIDTH/5,HEIGHT/5*2,'pic'+ this.imageID).setScale(2.5);
         this.add.image(WIDTH/5*4,HEIGHT/2,'enemy').setScale(2.5);
 
-        this.TESTTEXT = this.add.text(0,0, "meow",{font: "100px Arial", fill: "brown"});
 
         this.scene.get('HealthBar').events.on("completedAttack", this.winlosecondition.bind(this));
 

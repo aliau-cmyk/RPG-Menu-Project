@@ -31,7 +31,7 @@ class StartScene extends Phaser.Scene {
 
     // note all scenes are controlled by init() preload() create() and update()
     create() {
-        this.scene.launch('characterDataLoader');
+        //this.scene.launch('characterDataLoader');
 
         this.menumusic = this.sound.add('menumusic');
         var musicConfig = {
@@ -50,7 +50,7 @@ class StartScene extends Phaser.Scene {
 
         this.add.image(WIDTH/2,HEIGHT/2,"backgroundtest");
         this.add.image(WIDTH/2,HEIGHT/5*2,"title");
-        this.add.text(20, 20, "start scene", {font: "25px Arial", fill: "yellow"});
+        //this.add.text(20, 20, "start scene", {font: "25px Arial", fill: "yellow"});
     
 
         // make button, setInteractive

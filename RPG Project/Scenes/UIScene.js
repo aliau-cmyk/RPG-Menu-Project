@@ -56,6 +56,8 @@ class UIScene extends Phaser.Scene {
     create(){
         const WIDTH = this.sys.game.config.width;
         const HEIGHT = this.sys.game.config.height;
+
+        
         
         //ATTACK BUTTON
         this.attackButton = this.add.sprite(WIDTH/2,HEIGHT/3,'yellowButton').setInteractive().setScale(1.5)
@@ -70,7 +72,7 @@ class UIScene extends Phaser.Scene {
             //WORKING NOW
             this.firstOptionsInvisible();
             this.battleSelectionBox.setVisible(false);
-            this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/6,'yellowButton').setInteractive().setScale(1.5);
+            this.attack1 = this.add.sprite(WIDTH/2,HEIGHT/3,'yellowButton').setInteractive().setScale(1.5);
             this.attackText1 = this.add.text(0,0, attackOneName,{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText1, this.attack1);
 
@@ -86,7 +88,7 @@ class UIScene extends Phaser.Scene {
 
             }.bind(this));
 
-            this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/6*2,'yellowButton').setInteractive().setScale(1.5);
+            this.attack2 = this.add.sprite(WIDTH/2,HEIGHT/2,'yellowButton').setInteractive().setScale(1.5);
             this.attackText2 = this.add.text(0,0, attackTwoName,{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText2, this.attack2);
 
@@ -102,6 +104,7 @@ class UIScene extends Phaser.Scene {
 
             }.bind(this));
 
+            /*
             this.attack3 = this.add.sprite(WIDTH/2,HEIGHT/6*3,'yellowButton').setInteractive().setScale(1.5);
             this.attackText3 = this.add.text(0,0, "Attack3",{font: "35px Arial", fill: "brown"});
             centerButtonText(this.attackText3, this.attack3);
@@ -112,7 +115,7 @@ class UIScene extends Phaser.Scene {
 
 
             }.bind(this))
-
+            */
             this.backButton = this.add.sprite(WIDTH/2,HEIGHT/6*4,'yellowButton').setInteractive().setScale(1.5);
             this.backText = this.add.text(0,0, "Back",{font: "35px Arial", fill: "brown"});
             centerButtonText(this.backText, this.backButton);
@@ -136,26 +139,32 @@ class UIScene extends Phaser.Scene {
         })
         .start(battleSelectionDialogue, 50);
         
-        this.attackBox1 = createTextBox(this, WIDTH/3,HEIGHT/5, {
+        this.attackBox1 = createTextBox(this, WIDTH/3,HEIGHT/5 - 75, {
             wrapWidth: WIDTH/3,
-            fixedWidth: WIDTH/3.5,
-            fixedHeight: 50,
+            fixedWidth: WIDTH/3,
+            fixedHeight: 125,
         })
-        .start(attackDescription1, 50).setVisible(false)
+        .start(attackDescription1, 50).setVisible(false);
 
-        this.attackBox2 = createTextBox(this, WIDTH/3,HEIGHT/5*1.82, {
+        this.attackBox2 = createTextBox(this, WIDTH/3,HEIGHT/5*1.82 - 75, {
             wrapWidth: WIDTH/3,
-            fixedWidth: WIDTH/3.5,
-            fixedHeight: 50,
+            fixedWidth: WIDTH/3,
+            fixedHeight: 125,
         })
-        .start(attackDescription2, 50).setVisible(false)
+        .start(attackDescription2, 50).setVisible(false);
 
+
+        this.attackBox1.setDepth(1);
+        this.attackBox2.setDepth(1);
+
+        /*
         this.attackBox3 = createTextBox(this, WIDTH/3,HEIGHT/5*2.65, {
             wrapWidth: WIDTH/3,
             fixedWidth: WIDTH/3.5,
             fixedHeight: 50,
         })
         .start(attackDescription3, 20).setVisible(false)
+        */
        
         /*
         this.battleDialogueBox = createTextBox(this, WIDTH/5,HEIGHT/4*3, {
@@ -230,12 +239,15 @@ class UIScene extends Phaser.Scene {
         //this.add.text(20, 80, ya, {font: "25px Arial", fill: "yellow"}).setDepth(20);
 
         this.scene.get('HealthBar').events.on("completedAttack", this.updateDialogue.bind(this));
+        this.scene.bringToTop();
     }
 
     
     updateDialogue(someString){
-        let formattedString = this.formatString(someString);
-        placeholderDialogue = formattedString;
+        //let formattedString = this.formatString(someString);
+        //placeholderDialogue = formattedString;
+
+        placeholderDialogue = someString
 
         this.scene.run('battleDialogue');
 
@@ -274,10 +286,10 @@ class UIScene extends Phaser.Scene {
     secondMenuInvisible(){
         this.attack1.setVisible(false);
         this.attack2.setVisible(false);
-        this.attack3.setVisible(false);
+        //this.attack3.setVisible(false);
         this.attackText1.setVisible(false);
         this.attackText2.setVisible(false);
-        this.attackText3.setVisible(false);
+        //this.attackText3.setVisible(false);
         this.backButton.setVisible(false);
         this.backText.setVisible(false);
     }
